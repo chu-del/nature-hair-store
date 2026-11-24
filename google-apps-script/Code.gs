@@ -16,7 +16,7 @@ function doPost(e) {
     const items = getOrCreateSheet_(ss, ITEMS_SHEET, [
       "Created At","Order ID","SKU","Product Name","Unit Price","Quantity","Line Total"
     ]);
-    const orderId = "NH-" + Utilities.formatDate(new Date(), "Asia/Bangkok", "yyyyMMdd-HHmmss") + "-" + Math.floor(100 + Math.random() * 900);
+    const orderId = data.orderId || ("NH-" + Utilities.formatDate(new Date(), "Asia/Bangkok", "yyyyMMdd-HHmmss") + "-" + Math.floor(100 + Math.random() * 900));
     const c = data.customer;
     const created = new Date();
     const subtotal = Number(data.subtotal) || 0;
