@@ -36,10 +36,10 @@ export default function App(){
   e.preventDefault(); setNotice("");
   if(!SCRIPT_URL){setNotice("ยังไม่ได้ตั้งค่า Google Apps Script URL กรุณาตั้งค่า VITE_GOOGLE_SCRIPT_URL ใน Vercel ก่อนรับคำสั่งซื้อ");return;}
   setBusy(true);
-  const payload={customer:form,items:items.map(p=>({sku:p.sku,name:p.name,unitPrice:p.price,quantity:p.qty,lineTotal:p.price*p.qty})),subtotal:total,shipping,total:grandTotal,source:"Nature Hair Store"};
+  const orderNo="NH"+Date.now().toString().slice(-8);
+  const payload={orderId:orderNo,customer:form,items:items.map(p=>({sku:p.sku,name:p.name,unitPrice:p.price,quantity:p.qty,lineTotal:p.price*p.qty})),subtotal:total,shipping,total:grandTotal,source:"Nature Hair Store"};
   try{
    await fetch(SCRIPT_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)});
-   const orderNo="NH"+Date.now().toString().slice(-8);
    setOrderDone(orderNo);setCart({});setCheckout(false);setOpen(false);
    setForm({customerName:"",phone:"",address:"",subdistrict:"",district:"",province:"",postcode:"",note:""});
   }catch(err){setNotice("ส่งคำสั่งซื้อไม่สำเร็จ กรุณาตรวจสอบการเชื่อมต่อแล้วลองใหม่");}
